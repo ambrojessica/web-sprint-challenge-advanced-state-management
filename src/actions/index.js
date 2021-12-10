@@ -6,17 +6,26 @@ export const ERROR_SMURF = 'ERROR_SMURF';
 export const NEW_SMURF = 'NEW_SMURF';
 export const FAIL_SMURF = 'FAIL_SMURF';
 
-export const fetchSmurfs = () => {
-  return (dispatch) => {
-    dispatch(startSmurf());
-    axios.get('http://localhost:3333/smurfs')
-      .then(resp => {
-        console.log(resp);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
+export const fetchSmurfs = () => dispatch => {
+  dispatch(startSmurf());
+  axios.get(`http://localhost:3333/smurfs`)
+    .then(resp => {
+      const smurfs = resp.data;
+      dispatch(successSmurf(smurfs));
+    })
+    .catch(err => {
+      dispatch(errorSmurf(err));
+    });
+};
+
+export const newSmurf = (addSmurf) => {
+  axios.post(`http://localhost:3333/smurfs`, addSmurf)
+    .then(resp => {
+      console.log('post:', resp);
+    })
+    .catch(resp => {
+      console.log('error:', resp);
+    });
 };
 
 export const startSmurf = () => {
@@ -27,16 +36,16 @@ export const successSmurf = (smurfs) => {
   return ({ type: SUCCESS_SMURF, payload: smurfs });
 };
 
-export const errorSmurf = (errMsg) => {
-  return ({ type: ERROR_SMURF, payload: errMsg });
+export const errorSmurf = (errorMessage) => {
+  return ({ type: ERROR_SMURF, payload: errorMessage });
 };
 
-export const newSmurf = (addSmurf) => {
-  return ({ type: NEW_SMURF, payload: addSmurf });
-};
+// export const newSmurf = (addSmurf) => {
+//   return ({ type: NEW_SMURF, payload: addSmurf });
+// };
 
-export const failSmurf = (err) => {
-  return ({ type: FAIL_SMURF, payload: err });
+export const failSmurf = (error) => {
+  return ({ type: FAIL_SMURF, payload: error });
 };;
 
 
