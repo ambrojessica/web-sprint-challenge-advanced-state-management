@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 //import
 import { connect } from 'react-redux';
-import { successSmurf, newSmurf, errorSmurf } from '../actions';
+import { newSmurf, errorSmurf } from '../actions';
 
 const AddForm = (props) => {
 
@@ -28,14 +28,16 @@ const AddForm = (props) => {
             //dispatch a custom error action
             props.errorSmurf('please fill out form correctly');
         } else {
-            //dispatch an addSmurf action
-            newSmurf({
-                name: state.name,
-                position: state.position,
-                nickname: state.nickname,
-                description: state.description
+            props.newSmurf({
+                ...state,
+                id: Date.now()
             });
-            // props.newSmurf(state);
+            setState({
+                name: "",
+                position: "",
+                nickname: "",
+                description: ""
+            });
         }
     };
 
@@ -66,13 +68,14 @@ const AddForm = (props) => {
     </section>);
 };
 
-const mapState = state => {
+const mapStateToProps = state => {
     return {
         error: state.error
     };
 };
 
-export default connect(mapState, { successSmurf, errorSmurf, newSmurf })(AddForm);
+
+export default connect(mapStateToProps, { errorSmurf, newSmurf })(AddForm);
 
 //Task List:
 //1. Connect the errorMessage, setError and addSmurf actions to the AddForm component.

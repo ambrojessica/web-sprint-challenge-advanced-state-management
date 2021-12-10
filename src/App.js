@@ -15,6 +15,7 @@ const App = (props) => {
     props.fetchSmurfs();
   }, []);
 
+
   return (
     <div className="App">
       <Header />

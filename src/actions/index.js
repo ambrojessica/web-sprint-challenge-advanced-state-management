@@ -18,16 +18,6 @@ export const fetchSmurfs = () => dispatch => {
     });
 };
 
-export const newSmurf = (addSmurf) => {
-  axios.post(`http://localhost:3333/smurfs`, addSmurf)
-    .then(resp => {
-      console.log('post:', resp);
-    })
-    .catch(resp => {
-      console.log('error:', resp);
-    });
-};
-
 export const startSmurf = () => {
   return ({ type: START_SMURF });
 };
@@ -40,9 +30,9 @@ export const errorSmurf = (errorMessage) => {
   return ({ type: ERROR_SMURF, payload: errorMessage });
 };
 
-// export const newSmurf = (addSmurf) => {
-//   return ({ type: NEW_SMURF, payload: addSmurf });
-// };
+export const newSmurf = (addSmurf) => {
+  return ({ type: NEW_SMURF, payload: addSmurf });
+};
 
 export const failSmurf = (error) => {
   return ({ type: FAIL_SMURF, payload: error });
